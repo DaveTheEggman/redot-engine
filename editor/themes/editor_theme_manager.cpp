@@ -793,6 +793,47 @@ void EditorThemeManager::_populate_standard_styles(const Ref<EditorTheme> &p_the
 
 		p_theme->set_constant("align_to_largest_stylebox", "Button", 1); // Enabled.
 
+		// PrimaryButton.
+		{
+			p_theme->set_type_variation("PrimaryButton", "Button");
+
+			Ref<StyleBoxFlat> primary_button_normal = p_config.button_style->duplicate();
+			primary_button_normal->set_bg_color(p_config.accent_color);
+
+			Ref<StyleBoxFlat> primary_button_hover = primary_button_normal->duplicate();
+			primary_button_hover->set_bg_color(p_config.accent_color.lightened(0.1));
+
+			Ref<StyleBoxFlat> primary_button_pressed = primary_button_normal->duplicate();
+			primary_button_pressed->set_bg_color(p_config.accent_color.darkened(0.1));
+
+			Ref<StyleBoxFlat> primary_button_focus = primary_button_normal->duplicate();
+			primary_button_focus->set_draw_center(false);
+			primary_button_focus->set_border_width_all(Math::round(2 * MAX(1, EDSCALE)));
+			primary_button_focus->set_border_color(p_config.accent_color);
+
+			const Color primary_button_font_color = p_config.accent_color.get_luminance() > 0.5 ? Color(0, 0, 0) : Color(1, 1, 1);
+
+			p_theme->set_stylebox(CoreStringName(normal), "PrimaryButton", primary_button_normal);
+			p_theme->set_stylebox(SceneStringName(hover), "PrimaryButton", primary_button_hover);
+			p_theme->set_stylebox(SceneStringName(pressed), "PrimaryButton", primary_button_pressed);
+			p_theme->set_stylebox("focus", "PrimaryButton", primary_button_focus);
+			p_theme->set_stylebox("disabled", "PrimaryButton", p_config.button_style_disabled);
+
+			p_theme->set_color(SceneStringName(font_color), "PrimaryButton", primary_button_font_color);
+			p_theme->set_color("font_hover_color", "PrimaryButton", primary_button_font_color);
+			p_theme->set_color("font_hover_pressed_color", "PrimaryButton", primary_button_font_color);
+			p_theme->set_color("font_focus_color", "PrimaryButton", primary_button_font_color);
+			p_theme->set_color("font_pressed_color", "PrimaryButton", primary_button_font_color);
+			p_theme->set_color("font_disabled_color", "PrimaryButton", p_config.font_disabled_color);
+
+			p_theme->set_color("icon_normal_color", "PrimaryButton", p_config.icon_normal_color);
+			p_theme->set_color("icon_hover_color", "PrimaryButton", p_config.icon_hover_color);
+			p_theme->set_color("icon_focus_color", "PrimaryButton", p_config.icon_focus_color);
+			p_theme->set_color("icon_hover_pressed_color", "PrimaryButton", p_config.icon_pressed_color);
+			p_theme->set_color("icon_pressed_color", "PrimaryButton", p_config.icon_pressed_color);
+			p_theme->set_color("icon_disabled_color", "PrimaryButton", p_config.icon_disabled_color);
+		}
+
 		// MenuButton.
 
 		p_theme->set_stylebox(CoreStringName(normal), "MenuButton", p_config.panel_container_style);

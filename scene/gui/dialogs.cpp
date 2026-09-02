@@ -493,11 +493,10 @@ AcceptDialog::AcceptDialog() {
 
 	add_child(buttons_hbox, false, INTERNAL_MODE_BACK);
 
-	buttons_hbox->add_spacer();
 	ok_button = memnew(Button);
+	ok_button->set_theme_type_variation("PrimaryButton");
 	set_default_ok_text(ETR("OK"));
 	buttons_hbox->add_child(ok_button);
-	// Ensure hiding OK button will hide one of the initial spacers.
 	Control *bound_spacer = buttons_hbox->add_spacer();
 	ok_button->set_meta("__bound_spacer", bound_spacer);
 	ok_button->connect(SceneStringName(visibility_changed), callable_mp(this, &AcceptDialog::_button_visibility_changed).bind(ok_button));
