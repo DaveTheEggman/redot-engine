@@ -99,7 +99,19 @@ void AcceptDialog::_notification(int p_what) {
 		} break;
 
 		case NOTIFICATION_THEME_CHANGED: {
+			theme_cache.primary_button_style = get_theme_stylebox("button_primary", "AcceptDialog");
+			theme_cache.primary_button_hover_style = get_theme_stylebox("button_primary_hover", "AcceptDialog");
+			theme_cache.primary_button_pressed_style = get_theme_stylebox("button_primary_pressed", "AcceptDialog");
+			theme_cache.primary_button_focus_style = get_theme_stylebox("button_primary_focus", "AcceptDialog");
+			theme_cache.primary_button_disabled_style = get_theme_stylebox("button_primary_disabled", "AcceptDialog");
+
 			bg_panel->add_theme_style_override(SceneStringName(panel), theme_cache.panel_style);
+
+			ok_button->add_theme_style_override(CoreStringName(normal), theme_cache.primary_button_style);
+			ok_button->add_theme_style_override(SceneStringName(hover), theme_cache.primary_button_hover_style);
+			ok_button->add_theme_style_override(SceneStringName(pressed), theme_cache.primary_button_pressed_style);
+			ok_button->add_theme_style_override("focus", theme_cache.primary_button_focus_style);
+			ok_button->add_theme_style_override("disabled", theme_cache.primary_button_disabled_style);
 
 			child_controls_changed();
 			if (is_visible()) {

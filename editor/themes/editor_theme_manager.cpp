@@ -692,12 +692,30 @@ void EditorThemeManager::_create_shared_styles(const Ref<EditorTheme> &p_theme, 
 			p_config.window_style->set_expand_margin(SIDE_TOP, 24 * EDSCALE);
 
 			// Prevent corner artifacts between window title and body.
-			p_config.dialog_style = p_config.base_style->duplicate();
-			p_config.dialog_style->set_corner_radius(CORNER_TOP_LEFT, 0);
-			p_config.dialog_style->set_corner_radius(CORNER_TOP_RIGHT, 0);
+			p_config.dialog_style = make_flat_stylebox(p_config.dark_color_1.lerp(p_config.base_color, 0.65), p_config.popup_margin, p_config.popup_margin, p_config.popup_margin, p_config.popup_margin, p_config.corner_radius);
+
+			p_config.dialog_style->set_border_width_all(1 * EDSCALE);
+			p_config.dialog_style->set_border_color(p_config.extra_border_color_2);
 			p_config.dialog_style->set_content_margin_all(p_config.popup_margin);
 			// Prevent visible line between window title and body.
 			p_config.dialog_style->set_expand_margin(SIDE_BOTTOM, 2 * EDSCALE);
+
+			// AcceptDialog primary button styles.
+			p_config.dialog_button_style = p_config.button_style->duplicate();
+			p_config.dialog_button_style->set_bg_color(p_config.accent_color);
+			p_config.dialog_button_style->set_border_color(p_config.accent_color);
+
+			p_config.dialog_button_style_hover = p_config.dialog_button_style->duplicate();
+			p_config.dialog_button_style_hover->set_bg_color(p_config.accent_color.lerp(Color(1, 1, 1), 0.1));
+
+			p_config.dialog_button_style_pressed = p_config.dialog_button_style->duplicate();
+			p_config.dialog_button_style_pressed->set_bg_color(p_config.accent_color.lerp(Color(0, 0, 0), 0.1));
+
+			p_config.dialog_button_style_focus = p_config.dialog_button_style->duplicate();
+			p_config.dialog_button_style_focus->set_border_width_all(2 * MAX(1, EDSCALE));
+			p_config.dialog_button_style_focus->set_border_color(p_config.accent_color);
+
+			p_config.dialog_button_style_disabled = p_config.button_style_disabled->duplicate();
 		}
 
 		// Panels.
@@ -1406,6 +1424,13 @@ void EditorThemeManager::_populate_standard_styles(const Ref<EditorTheme> &p_the
 
 		// AcceptDialog.
 		p_theme->set_stylebox(SceneStringName(panel), "AcceptDialog", p_config.dialog_style);
+
+		p_theme->set_stylebox("button_primary", "AcceptDialog", p_config.dialog_button_style);
+		p_theme->set_stylebox("button_primary_hover", "AcceptDialog", p_config.dialog_button_style_hover);
+		p_theme->set_stylebox("button_primary_pressed", "AcceptDialog", p_config.dialog_button_style_pressed);
+		p_theme->set_stylebox("button_primary_focus", "AcceptDialog", p_config.dialog_button_style_focus);
+		p_theme->set_stylebox("button_primary_disabled", "AcceptDialog", p_config.dialog_button_style_disabled);
+
 		p_theme->set_constant("buttons_separation", "AcceptDialog", 8 * EDSCALE);
 		// Make buttons with short texts such as "OK" easier to click/tap.
 		p_theme->set_constant("buttons_min_width", "AcceptDialog", p_config.dialogs_buttons_min_size.x * EDSCALE);

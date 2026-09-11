@@ -67,6 +67,11 @@ class AcceptDialog : public Window {
 
 	struct ThemeCache {
 		Ref<StyleBox> panel_style;
+		Ref<StyleBox> primary_button_style;
+		Ref<StyleBox> primary_button_hover_style;
+		Ref<StyleBox> primary_button_pressed_style;
+		Ref<StyleBox> primary_button_focus_style;
+		Ref<StyleBox> primary_button_disabled_style;
 		int buttons_separation = 0;
 		int buttons_min_width = 0;
 		int buttons_min_height = 0;

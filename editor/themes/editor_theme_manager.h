@@ -154,6 +154,11 @@ class EditorThemeManager {
 		Ref<StyleBoxFlat> popup_border_style;
 		Ref<StyleBoxFlat> window_style;
 		Ref<StyleBoxFlat> dialog_style;
+		Ref<StyleBoxFlat> dialog_button_style;
+		Ref<StyleBoxFlat> dialog_button_style_hover;
+		Ref<StyleBoxFlat> dialog_button_style_pressed;
+		Ref<StyleBoxFlat> dialog_button_style_focus;
+		Ref<StyleBoxFlat> dialog_button_style_disabled;
 		Ref<StyleBoxFlat> panel_container_style;
 		Ref<StyleBoxFlat> content_panel_style;
 		Ref<StyleBoxFlat> tree_panel_style;
