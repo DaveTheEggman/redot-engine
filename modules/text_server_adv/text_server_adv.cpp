@@ -1238,6 +1238,16 @@ bool TextServerAdvanced::_ensure_glyph(FontAdvanced *p_font_data, const Vector2i
 		return E->value.found;
 	}
 
+	// Texture fonts don't have separate glyphs for subpixel-position variants
+	// so we reuse the base glyph instead of falling back to FreeType rasterization.
+	if (p_glyph != glyph_index) {
+		E = fd->glyph_map.find(glyph_index);
+		if (E && E->value.texture_idx != -1) {
+			r_glyph = E->value;
+			return E->value.found;
+		}
+	}
+
 	if (glyph_index == 0) { // Non graphical or invalid glyph, do not render.
 		E = fd->glyph_map.insert(p_glyph, FontGlyph());
 		r_glyph = E->value;
